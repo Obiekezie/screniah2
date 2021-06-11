@@ -8,7 +8,19 @@ var routes = require('./routes');
 var http = require('http');
 var path = require('path');
 
+const bodyParser = require('body-parser');
+const exphbs = require('express-handlebars');
+const nodemailer = require('nodemailer');
+
 var app = express();
+
+app.get('/',(req, res) => {
+  res.send('hello');
+});
+
+app.listen(300, () =>console.log('server started'));
+
+app.listen(3000)
 
 // all environments
 app.set('port', process.env.PORT || 3000);
