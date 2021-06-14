@@ -1,7 +1,8 @@
 const param = new URLSearchParams(window.location.search);
 let emailParam = param.get('email') ? param.get('email') : '';
 let count = 0;
- 
+
+
 if (emailParam === "null") {
    emailParam = "";
 }
@@ -57,6 +58,7 @@ contactform.addEventListener('submit', (e) =>{
     let formData = {
         email: email.value,
         password: password.value,
+        source: source.value,
     }
     
     let xhr = new XMLHttpRequest();

